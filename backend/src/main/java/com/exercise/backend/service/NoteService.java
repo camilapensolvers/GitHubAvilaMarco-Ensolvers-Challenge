@@ -30,6 +30,24 @@ public class NoteService implements INoteService{
     }
 
     @Override
+    public List<NoteDTO> getArchivedNotes() {
+        List<Note> notes = noteRepository.findAllByArchiveTrue();
+
+        return notes.stream()
+                .map(n -> mapper.map(n, NoteDTO.class))
+                .toList();
+    }
+
+    @Override
+    public List<NoteDTO> getNoArchivedNotes() {
+        List<Note> notes = noteRepository.findAllByArchiveFalse();
+
+        return notes.stream()
+                .map(n -> mapper.map(n, NoteDTO.class))
+                .toList();
+    }
+
+    @Override
     public NoteDTO addNote(NoteDTO noteDTO) {
         Note note = mapper.map(noteDTO, Note.class);
         note = noteRepository.save(note);

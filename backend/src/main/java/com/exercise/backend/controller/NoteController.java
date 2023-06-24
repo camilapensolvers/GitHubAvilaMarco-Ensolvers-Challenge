@@ -25,6 +25,18 @@ public class NoteController {
         return new ResponseEntity<>(res, OK);
     }
 
+    @GetMapping("/list/archive")
+    public ResponseEntity<?> listArchivedNotes() {
+        var res = noteService.getArchivedNotes();
+        return new ResponseEntity<>(res, OK);
+    }
+
+    @GetMapping("/list/no-archive")
+    public ResponseEntity<?> listNoArchivedNotes() {
+        var res = noteService.getNoArchivedNotes();
+        return new ResponseEntity<>(res, OK);
+    }
+
     @PostMapping("/")
     public ResponseEntity<?> createNote(@RequestBody NoteDTO noteDTO) {
         var res = noteService.addNote(noteDTO);
