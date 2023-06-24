@@ -42,6 +42,7 @@ public class NoteService implements INoteService{
         Note note = noteRepository.findById(id)
                 .orElseThrow();
         mapper.map(noteDTO, note);
+        note.setId(id);
         noteRepository.save(note);
         return mapper.map(note, NoteDTO.class);
     }

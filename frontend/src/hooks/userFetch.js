@@ -1,15 +1,13 @@
 import {useState, useEffect} from "react"
 
-function useFetch(url){
+function useService(promise){
     const [data, setData] = useState(null)
 
     useEffect(() =>{
-        fetch(url)
-        .then(res => res.json())
-        .then(data => setData(data))
+        promise.then(data => setData(data))
     }, [])
 
     return {data}
 }
 
-export default useFetch
+export default useService

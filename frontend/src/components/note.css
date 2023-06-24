@@ -1,0 +1,5 @@
+.n-container{
+    border: solid;
+    display: flex;
+    align-items: center;
+}
