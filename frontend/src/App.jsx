@@ -36,7 +36,7 @@ function App() {
     }
   }
 
-  const handleShow = () => {
+  const handleSave = () => {
     setNote({})
     setShow(true)
   }
@@ -49,6 +49,10 @@ function App() {
   const handleDelete = (id) => {
     setNote({ id })
     setShowConfirm(true)
+  }
+
+  const handleArchive = (id) => {
+    console.log("Archive", id);
   }
 
   const handleDeleteNote = () => {
@@ -65,7 +69,7 @@ function App() {
     <>
       <header>
         <h1>My notes</h1>
-        <Button onClick={handleShow}>Create Note</Button>
+        <Button onClick={handleSave}>Create Note</Button>
       </header>
       <section className='notes-container'>
         {
@@ -75,6 +79,7 @@ function App() {
               noteData={note}
               handleEdit={handleEdit}
               handleDelete={handleDelete}
+              handleArchive={ }
             />
           ))
         }

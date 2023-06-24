@@ -66,6 +66,30 @@ public class NoteService implements INoteService{
     }
 
     @Override
+    public ResponseDTO archiveNote(Long id) {
+        Note note = noteRepository.findById(id)
+                .orElseThrow();
+        note.setArchive(true);
+        noteRepository.save(note);
+        return new ResponseDTO(
+                "Archive",
+                String.format("Note with %s id was archive", id)
+        );
+    }
+
+    @Override
+    public ResponseDTO unarchiveNote(Long id) {
+        Note note = noteRepository.findById(id)
+                .orElseThrow();
+        note.setArchive(false);
+        noteRepository.save(note);
+        return new ResponseDTO(
+                "Archive",
+                String.format("Note with %s id was unarchive", id)
+        );
+    }
+
+    @Override
     public ResponseDTO deleteNote(Long id) {
         // TODO: add throws
         if (!noteRepository.existsById(id)){

@@ -49,6 +49,18 @@ public class NoteController {
         return new ResponseEntity<>(res, OK);
     }
 
+    @PutMapping("/{idNote}/archive")
+    public ResponseEntity<?> archiveNote(@PathVariable Long idNote) {
+        var res = noteService.archiveNote(idNote);
+        return new ResponseEntity<>(res, OK);
+    }
+
+    @PutMapping("/{idNote}/unarchive")
+    public ResponseEntity<?> unarchiveNote(@PathVariable Long idNote) {
+        var res = noteService.unarchiveNote(idNote);
+        return new ResponseEntity<>(res, OK);
+    }
+
     @DeleteMapping("/{idNote}")
     public ResponseEntity<?> deleteNote(@PathVariable Long idNote) {
         var res = noteService.deleteNote(idNote);
