@@ -15,8 +15,8 @@ public interface INoteService {
 
     NoteDTO editNote(Long id, NoteDTO noteDTO);
 
-    ResponseDTO archiveNote(Long id);
-    ResponseDTO unarchiveNote(Long id);
+    NoteDTO archiveNote(Long id);
+    NoteDTO unarchiveNote(Long id);
 
     ResponseDTO deleteNote(Long id);
 }

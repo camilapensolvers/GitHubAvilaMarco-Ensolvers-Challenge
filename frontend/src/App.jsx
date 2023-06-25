@@ -1,113 +1,79 @@
 import { useEffect, useState } from 'react';
-import Note from './components/Note'
-import { Button, Modal } from 'react-bootstrap';
-
+import { Button } from 'react-bootstrap';
 import './App.css'
 import ModalNote from './components/ModalNote';
-import { deleteNote, editNote, getNotes, saveNote } from './service/notes';
-import useService from './hooks/userFetch';
+import { Link, Outlet } from 'react-router-dom';
+import FormNote from './components/FormNote';
+import UseNotes from './hooks/UseNotes';
+import UseFilters from './hooks/useFilters';
+import { useAction } from './hooks/useAction';
+import { ACTIONS } from './utils/constans';
 
 function App() {
-
+  const { deleteNote } = UseNotes()
+  const { actionName, setAction, note, setNote } = useAction()
   const [show, setShow] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [notes, setNotes] = useState([])
-  const [note, setNote] = useState({})
+  const { setFilters } = UseFilters()
 
   useEffect(() => {
-    getNotes().then(data => setNotes(data))
-  }, [])
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    const formData = new FormData(e.target)
-    const formJson = Object.fromEntries(formData.entries());
-
-    if (Object.keys(note).length === 0) {
-      const result = saveNote(formJson)
-      result.then(note => setNotes([...notes, note]))
-    } else {
-      const result = editNote(note.id, formJson)
-      result.then(note => {
-        const newNotes = notes.map(n => n.id === note.id ? note : n)
-        setNotes(newNotes)
-      })
+    if (actionName !== "") {
+      setShow(true)
     }
-  }
-
-  const handleSave = () => {
-    setNote({})
-    setShow(true)
-  }
-
-  const handleEdit = (note) => {
-    setNote(note)
-    setShow(true)
-  }
-
-  const handleDelete = (id) => {
-    setNote({ id })
-    setShowConfirm(true)
-  }
-
-  const handleArchive = (id) => {
-    console.log("Archive", id);
-  }
+  }, [actionName, note])
 
   const handleDeleteNote = () => {
-    const result = deleteNote(note.id)
-    result.then(data => {
-      const filterNotes = notes.filter(n => n.id !== note.id)
-      setNotes(filterNotes)
-      setShowConfirm(false)
-      console.log(data);
-    })
+    deleteNote(note.id)
+    closeModal()
+  }
+
+  const closeModal = () => {
+    setShow(false)
+    setNote({})
+    setAction("")
   }
 
   return (
     <>
       <header>
-        <h1>My notes</h1>
-        <Button onClick={handleSave}>Create Note</Button>
+        <nav>
+          <ul className='navbar-nav me-auto'>
+            <li className='nav-item'>
+              <Link to="notes/archived" className='nav-link'>Archive notes</Link>
+            </li>
+            <li className='nav-item'>
+              <Link to="notes" className='nav-link'>My notes</Link>
+            </li>
+          </ul>
+        </nav>
       </header>
-      <section className='notes-container'>
-        {
-          notes?.map((note) => (
-            <Note
-              key={note.id}
-              noteData={note}
-              handleEdit={handleEdit}
-              handleDelete={handleDelete}
-              handleArchive={ }
-            />
-          ))
-        }
-      </section>
 
-      <ModalNote
-        show={show}
-        noteData={note}
-        handleClose={() => setShow(false)}
-        handleSubmit={handleSubmit}
-      />
+      <Outlet />
 
-      <Modal
-        size="sm"
-        show={showConfirm}
-        onHide={() => setShowConfirm(false)}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            Are you sure you want to delete this note?
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Button variant="danger" onClick={handleDeleteNote}> Yes </Button>
-          <Button onClick={() => setShowConfirm(false)}> No </Button>
-        </Modal.Body>
-      </Modal>
+      {actionName !== "" &&
+        <ModalNote
+
+          show={show}
+          handleClose={closeModal}
+          title={
+            actionName === ACTIONS.DELETE
+              ? "Are you sure you want to delete this note?"
+              : "Create/Edit Note"
+          }
+        >
+          {
+            actionName === ACTIONS.DELETE
+              ?
+              <>
+                <Button variant="danger" onClick={(handleDeleteNote)}> Yes </Button>
+                <Button onClick={closeModal}> No </Button>
+              </>
+              :
+              <FormNote
+                handleClose={closeModal}
+              ></FormNote>
+          }
+        </ModalNote>
+      }
     </>
   )
 }

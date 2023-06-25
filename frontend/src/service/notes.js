@@ -1,6 +1,5 @@
-import useFetch from "../hooks/userFetch"
 
-export const saveNote = (note) => {
+export const saveNoteService = (note) => {
     const request = {
         method: "POST",
         headers: {
@@ -11,7 +10,7 @@ export const saveNote = (note) => {
     return fetchData("/notes/", request)
 }
 
-export const editNote = (id, note) => {
+export const editNoteService = (id, note) => {
     const request = {
         method: "PUT",
         headers: {
@@ -22,12 +21,32 @@ export const editNote = (id, note) => {
     return fetchData(`/notes/${id}`, request)
 }
 
-export const deleteNote = (id) => {
+export const archiveNoteService = (id) => {
+    const request = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    return fetchData(`/notes/${id}/archive`, request)
+}
+
+export const unarchiveNoteService = (id) => {
+    const request = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    return fetchData(`/notes/${id}/unarchive`, request)
+}
+
+export const deleteNoteService = (id) => {
     const request = { method: "DELETE" }
     return fetchData(`/notes/${id}`, request)
 }
 
-export const getNotes = () => {
+export const getNotesService = () => {
     return fetchData(`/notes/list`)
 }
 

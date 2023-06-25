@@ -59,34 +59,28 @@ public class NoteService implements INoteService{
         // TODO: add throws, keep the id?
         Note note = noteRepository.findById(id)
                 .orElseThrow();
-        mapper.map(noteDTO, note);
-        note.setId(id);
+        note.setTitle(noteDTO.getTitle());
+        note.setContent(noteDTO.getContent());
         noteRepository.save(note);
         return mapper.map(note, NoteDTO.class);
     }
 
     @Override
-    public ResponseDTO archiveNote(Long id) {
+    public NoteDTO archiveNote(Long id) {
         Note note = noteRepository.findById(id)
                 .orElseThrow();
         note.setArchive(true);
-        noteRepository.save(note);
-        return new ResponseDTO(
-                "Archive",
-                String.format("Note with %s id was archive", id)
-        );
+        note = noteRepository.save(note);
+        return mapper.map(note, NoteDTO.class);
     }
 
     @Override
-    public ResponseDTO unarchiveNote(Long id) {
+    public NoteDTO unarchiveNote(Long id) {
         Note note = noteRepository.findById(id)
                 .orElseThrow();
         note.setArchive(false);
         noteRepository.save(note);
-        return new ResponseDTO(
-                "Archive",
-                String.format("Note with %s id was unarchive", id)
-        );
+        return mapper.map(note, NoteDTO.class);
     }
 
     @Override
@@ -95,6 +89,7 @@ public class NoteService implements INoteService{
         if (!noteRepository.existsById(id)){
             System.out.println("Error");
         }
+        noteRepository.deleteById(id);
         return new ResponseDTO(
                 "Deleted",
                 String.format("Note with %s id was delete", id)

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +17,6 @@ public class NoteDTO {
     private String title;
     private String content;
     private Boolean archive;
-    @JsonFormat(pattern = "dd-MMM-yyyy")
+    @JsonFormat(pattern = "dd/MMM/yyyy")
     private LocalDate lastEdited;
 }

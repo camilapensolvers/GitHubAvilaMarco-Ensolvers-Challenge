@@ -1,9 +1,9 @@
 import reactLogo from '../assets/react.svg'
 import './note.css'
 
-function Note({noteData, handleEdit, handleDelete}){
+function Note({ noteData, handleEdit, handleDelete, handleArchive, handleUnarchive }) {
 
-    const {id, title, content } = noteData
+    const { id, title, content, last_edited, archive } = noteData
 
     return (
         <div className='n-container'>
@@ -12,10 +12,15 @@ function Note({noteData, handleEdit, handleDelete}){
             </div>
             <div>
                 <h3>{title}</h3>
-                <p>Last edited: 10/jan/2023</p>
+                <p>Last edited: {last_edited}</p>
             </div>
             <div>
-                <button>Archive</button>
+                {
+                    archive ?
+                        <button onClick={handleUnarchive}>Unarchive</button>
+                        :
+                        <button onClick={handleArchive}>Archive</button>
+                }
                 <button onClick={() => handleEdit(noteData)}>Edit</button>
                 <button onClick={() => handleDelete(id)}>Delete</button>
             </div>
