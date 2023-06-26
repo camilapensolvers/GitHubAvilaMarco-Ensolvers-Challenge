@@ -1,5 +1,6 @@
 package com.exercise.backend.dto;
 
+import com.exercise.backend.entity.Category;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,4 +21,5 @@ public class NoteDTO {
     private Boolean archive;
     @JsonFormat(pattern = "dd/MMM/yyyy")
     private LocalDate lastEdited;
+    private List<CategoryDTO> categories;
 }
