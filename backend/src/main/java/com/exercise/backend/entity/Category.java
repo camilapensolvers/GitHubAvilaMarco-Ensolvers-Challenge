@@ -1,7 +1,6 @@
 package com.exercise.backend.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -9,6 +8,9 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@ToString
+@AllArgsConstructor
 public class Category {
 
     @Id
@@ -16,4 +18,11 @@ public class Category {
     private Long id;
 
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "note_id")
+    private Note note;
+    public Category(String name) {
+        this.name = name;
+    }
 }

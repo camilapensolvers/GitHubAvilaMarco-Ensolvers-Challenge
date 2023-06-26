@@ -2,6 +2,7 @@ package com.exercise.backend.service;
 
 import com.exercise.backend.dto.NoteDTO;
 import com.exercise.backend.dto.response.ResponseDTO;
+import com.exercise.backend.entity.Category;
 import com.exercise.backend.entity.Note;
 import com.exercise.backend.repository.NoteRepository;
 import org.modelmapper.ModelMapper;
@@ -15,9 +16,12 @@ public class NoteService implements INoteService{
 
     ModelMapper mapper;
 
-    public NoteService(NoteRepository noteRepository, ModelMapper mapper) {
+    ICategoryService categoryService;
+
+    public NoteService(NoteRepository noteRepository, ModelMapper mapper, ICategoryService categoryService) {
         this.noteRepository = noteRepository;
         this.mapper = mapper;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -49,6 +53,7 @@ public class NoteService implements INoteService{
 
     @Override
     public NoteDTO addNote(NoteDTO noteDTO) {
+        System.out.println(noteDTO.getCategories());
         Note note = mapper.map(noteDTO, Note.class);
         note = noteRepository.save(note);
         return mapper.map(note, NoteDTO.class);
@@ -59,10 +64,10 @@ public class NoteService implements INoteService{
         // TODO: add throws, keep the id?
         Note note = noteRepository.findById(id)
                 .orElseThrow();
-        note.setTitle(noteDTO.getTitle());
-        note.setContent(noteDTO.getContent());
-        noteRepository.save(note);
-        return mapper.map(note, NoteDTO.class);
+        categoryService.deleteAll(note.getCategories());
+        note.getCategories().clear();
+        noteDTO.setId(id);
+        return addNote(noteDTO);
     }
 
     @Override

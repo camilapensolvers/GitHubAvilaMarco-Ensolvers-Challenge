@@ -15,8 +15,4 @@ spring:
     property-naming-strategy: SNAKE_CASE
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    properties:
-      hibernate:
-        format_sql: true
-    show-sql: true
     defer-datasource-initialization: true
