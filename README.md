@@ -5,11 +5,17 @@
 - Java 17
 - React 18.2.0
 - Node 18.16.1
+- Apache Maven 3.6.3
 
-# Consideration
+# Run Project
+execute run.sh
+
+# Consideration - 
+* I use H2, a sql in-memory database, but will would very easy replace for a MySQL database or any other
+
+# This problems were resolved
 * for install packages of node use, i forgot resolve dependency problem:
 npm install --force
-* I use H2 is a sql in-memory database
 for execute the project that you need run the nexts commands:
 in frondent folder run:
 - npm run dev
