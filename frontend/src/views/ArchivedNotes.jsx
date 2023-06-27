@@ -11,7 +11,7 @@ function ArchivedNotes() {
     useEffect(() => {
         setFilters(prevState => ({ ...prevState, is_archived: true }))
     }, [setFilters])
-    console.log(filterNotes(notes));
+
     return (
         <section>
             <h1>Archived notes</h1>

@@ -26,7 +26,7 @@ function Notes({ notes }) {
     const handleUnarchive = (id) => {
         unarchiveNote(id)
     }
-    console.log("render");
+
     return (
         <section className='notes-container'>
             {

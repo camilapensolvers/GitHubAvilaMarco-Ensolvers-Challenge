@@ -2,7 +2,7 @@ import './App.css'
 
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Link, Outlet } from 'react-router-dom';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ACTIONS } from './utils/constans';
 import FormNote from './components/FormNote';
@@ -20,7 +20,6 @@ function App() {
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
-    console.log("UPDATE CATEGORIES", filters.is_archived);
     getCategoriesService(filters.is_archived).then(data => setCategories(data))
   }, [notes, filters])
 

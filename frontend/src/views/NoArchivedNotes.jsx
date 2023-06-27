@@ -15,7 +15,6 @@ function NoArchivedNotes() {
     useEffect(() => {
         setFilters(prevState => ({ ...prevState, is_archived: false }))
     }, [setFilters])
-    console.log(filterNotes(notes));
 
     const handleClick = () => {
         setAction(ACTIONS.SAVE)
