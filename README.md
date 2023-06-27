@@ -7,7 +7,9 @@
 - Node 18.16.1
 
 # Consideration
-I use H2 is a sql in-memory database
+* for install packages of node use, i forgot resolve dependency problem:
+npm install --force
+* I use H2 is a sql in-memory database
 for execute the project that you need run the nexts commands:
 in frondent folder run:
 - npm run dev
