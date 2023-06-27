@@ -31,10 +31,6 @@ public class Note {
     @OneToMany(mappedBy = "note", cascade = CascadeType.ALL)
     private List<Category> categories;
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
-
     public Note(){
         this.categories = new ArrayList<>();
     }

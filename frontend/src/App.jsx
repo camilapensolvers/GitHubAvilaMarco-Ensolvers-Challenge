@@ -1,19 +1,28 @@
-import { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
 import './App.css'
-import ModalNote from './components/ModalNote';
+
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Link, Outlet } from 'react-router-dom';
-import FormNote from './components/FormNote';
-import UseNotes from './hooks/UseNotes';
-import UseFilters from './hooks/useFilters';
-import { useAction } from './hooks/useAction';
+import { useEffect, useMemo, useState } from 'react';
+
 import { ACTIONS } from './utils/constans';
+import FormNote from './components/FormNote';
+import ModalNote from './components/ModalNote';
+import { getCategoriesService } from './service/categories';
+import { useActions } from './hooks/useActions';
+import { useFilters } from './hooks/useFilters';
+import { useNotes } from './hooks/useNotes';
 
 function App() {
-  const { deleteNote } = UseNotes()
-  const { actionName, setAction, note, setNote } = useAction()
+  const { actionName, setAction, note, setNote } = useActions()
+  const { notes, deleteNote } = useNotes()
+  const { filters, setFilters } = useFilters()
   const [show, setShow] = useState(false);
-  const { setFilters } = UseFilters()
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    console.log("UPDATE CATEGORIES", filters.is_archived);
+    getCategoriesService(filters.is_archived).then(data => setCategories(data))
+  }, [notes, filters])
 
   useEffect(() => {
     if (actionName !== "") {
@@ -32,6 +41,14 @@ function App() {
     setAction("")
   }
 
+  const handleChange = (e) => {
+    const current = e.target.value
+    setFilters(prevState => ({
+      ...prevState,
+      category: current
+    }))
+  }
+
   return (
     <>
       <header>
@@ -47,9 +64,27 @@ function App() {
         </nav>
       </header>
 
+      <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+        <Form.Label column sm="2">
+          categories
+        </Form.Label>
+        <Col sm="10">
+          <Form.Select onChange={handleChange}>
+            <option value="all">all</option>
+            {
+              categories?.map(c =>
+                <option key={c.id} value={c.name} > {c.name}</option>
+              )
+            }
+
+          </Form.Select>
+        </Col>
+      </Form.Group >
+
       <Outlet />
 
-      {actionName !== "" &&
+      {
+        actionName !== "" &&
         <ModalNote
 
           show={show}

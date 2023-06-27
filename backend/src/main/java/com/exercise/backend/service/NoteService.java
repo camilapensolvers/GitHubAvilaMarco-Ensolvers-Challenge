@@ -53,9 +53,12 @@ public class NoteService implements INoteService{
 
     @Override
     public NoteDTO addNote(NoteDTO noteDTO) {
-        System.out.println(noteDTO.getCategories());
         Note note = mapper.map(noteDTO, Note.class);
         note = noteRepository.save(note);
+        for (Category c: note.getCategories()){
+            c.setNote(note);
+        }
+        categoryService.saveAllCategories(note.getCategories());
         return mapper.map(note, NoteDTO.class);
     }
 

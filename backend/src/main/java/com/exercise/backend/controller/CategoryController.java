@@ -2,13 +2,12 @@ package com.exercise.backend.controller;
 
 import com.exercise.backend.service.CategoryService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/categories")
 public class CategoryController {
 
@@ -19,8 +18,8 @@ public class CategoryController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<?> listUniqueCategories() {
-        var res = categoryService.getUniqueCategories();
+    public ResponseEntity<?> listUniqueCategories(@RequestParam boolean is_archive) {
+        var res = categoryService.getUniqueCategories(is_archive);
         return new ResponseEntity<>(res, OK);
     }
 }

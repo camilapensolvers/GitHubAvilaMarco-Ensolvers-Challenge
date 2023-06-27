@@ -1,9 +1,10 @@
-import reactLogo from '../assets/react.svg'
 import './note.css'
+
+import reactLogo from '../assets/react.svg'
 
 function Note({ noteData, handleEdit, handleDelete, handleArchive, handleUnarchive }) {
 
-    const { id, title, content, last_edited, archive } = noteData
+    const { id, title, last_edited, archive } = noteData
 
     return (
         <div className='n-container'>

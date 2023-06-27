@@ -6,7 +6,7 @@ import com.exercise.backend.entity.Category;
 import java.util.List;
 
 public interface ICategoryService {
-    List<CategoryDTO> getUniqueCategories();
+    List<CategoryDTO> getUniqueCategories(boolean is_archive);
 
     List<Category> saveAllCategories(List<Category> categories);
 

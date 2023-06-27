@@ -1,21 +1,21 @@
+import { ACTIONS } from "../utils/constans";
 import { Button } from "react-bootstrap";
 import Notes from "../components/Notes";
+import { useActions } from '../hooks/useActions';
 import { useEffect } from "react";
-import UseFilters from "../hooks/useFilters";
-import UseNotes from "../hooks/UseNotes";
-import { useAction } from '../hooks/useAction';
-import { ACTIONS } from "../utils/constans";
+import { useFilters } from "../hooks/useFilters";
+import { useNotes } from "../hooks/useNotes";
 
 function NoArchivedNotes() {
 
-    const { notes } = UseNotes()
-    const { setFilters, filterNotes } = UseFilters()
-
-    const { setAction } = useAction()
+    const { setAction } = useActions()
+    const { notes } = useNotes()
+    const { setFilters, filterNotes } = useFilters()
 
     useEffect(() => {
         setFilters(prevState => ({ ...prevState, is_archived: false }))
     }, [setFilters])
+    console.log(filterNotes(notes));
 
     const handleClick = () => {
         setAction(ACTIONS.SAVE)

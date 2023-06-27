@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { NotesContext } from "../context/NotesContext"
 
-function UseNotes() {
+export function useNotes() {
     const context = useContext(NotesContext)
 
     if (context === undefined) {
@@ -10,5 +10,3 @@ function UseNotes() {
 
     return context
 }
-
-export default UseNotes

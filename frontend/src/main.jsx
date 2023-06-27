@@ -1,27 +1,30 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
+
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { ActionProvider } from './context/ActionContext.jsx';
-import UseNotes from './hooks/UseNotes.jsx';
-import { getNotesService } from './service/notes.js';
+
+import { ActionsProvider } from './context/ActionsContext.jsx';
+import App from './App.jsx'
 import ArchivedNotes from './views/ArchivedNotes.jsx';
+import { FiltersProvider } from './context/FiltersContext.jsx';
 import NoArchivedNotes from './views/NoArchivedNotes.jsx';
 import { NotesProvider } from './context/NotesContext.jsx';
-
-
-
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { getNotesService } from './service/notes.js';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element:
       <NotesProvider>
-        <ActionProvider>
-          <App />
-        </ActionProvider>
+        <FiltersProvider>
+          <ActionsProvider>
+
+            <App />
+
+          </ActionsProvider>
+        </FiltersProvider>
       </NotesProvider>
     ,
     loader: async () => {

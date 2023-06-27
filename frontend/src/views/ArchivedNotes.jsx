@@ -1,17 +1,17 @@
-import { useEffect } from "react"
 import Notes from "../components/Notes"
-import UseFilters from "../hooks/useFilters"
-import UseNotes from "../hooks/UseNotes"
+import { useEffect } from "react"
+import { useFilters } from "../hooks/useFilters"
+import { useNotes } from "../hooks/useNotes"
 
 function ArchivedNotes() {
 
-    const { notes } = UseNotes()
-    const { setFilters, filterNotes } = UseFilters()
+    const { notes } = useNotes()
+    const { setFilters, filterNotes } = useFilters()
 
     useEffect(() => {
         setFilters(prevState => ({ ...prevState, is_archived: true }))
-    }, [])
-
+    }, [setFilters])
+    console.log(filterNotes(notes));
     return (
         <section>
             <h1>Archived notes</h1>

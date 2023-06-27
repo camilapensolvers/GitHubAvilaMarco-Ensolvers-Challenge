@@ -21,9 +21,9 @@ public class CategoryService implements ICategoryService{
     }
 
     @Override
-    public List<CategoryDTO> getUniqueCategories() {
+    public List<CategoryDTO> getUniqueCategories(boolean is_archive) {
         return categoryRepository
-                .findAll()
+                .findAllByNotesArchived(is_archive)
                 .stream()
                 .map(category -> mapper.map(category, CategoryDTO.class))
                 .distinct()
@@ -31,16 +31,8 @@ public class CategoryService implements ICategoryService{
     }
 
     @Override
-    public List<Category> saveAllCategories(List<Category> categoriesDTO) {
-        return categoriesDTO.stream()
-                .map(categoryDTO -> {
-                    if(categoryDTO.getId() == null){
-                        return categoryRepository.save(new Category(categoryDTO.getName()));
-                    }else {
-                        return mapper.map(categoryDTO, Category.class);
-                    }
-                })
-                .toList();
+    public List<Category> saveAllCategories(List<Category> categories) {
+        return categoryRepository.saveAll(categories);
     }
 
     @Override

@@ -1,13 +1,14 @@
 import { Button, Form } from 'react-bootstrap'
-import { useAction } from '../hooks/useAction'
+import { useRef, useState } from 'react'
+
 import { ACTIONS } from '../utils/constans'
-import UseNotes from '../hooks/UseNotes'
-import { useEffect, useId, useRef, useState } from 'react'
+import { useActions } from '../hooks/useActions'
+import { useNotes } from '../hooks/useNotes'
 
 function FormNote({ handleClose }) {
-    const { saveNote, editNote } = UseNotes()
-    const { actionName, note } = useAction()
-    const { title, content, categories } = note
+    const { saveNote, editNote } = useNotes()
+    const { actionName, note } = useActions()
+    const { title, content, categories, archive } = note
     const categoryRef = useRef()
     const [categoriesForm, setCategoriesForm] = useState(categories || [])
 
@@ -56,6 +57,10 @@ function FormNote({ handleClose }) {
     return (
         <>
             <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3 d-none" controlId="archive">
+                    <Form.Label>archive</Form.Label>
+                    <Form.Control type="text" name="archive" defaultValue={archive} />
+                </Form.Group>
                 <Form.Group className="mb-3" controlId="title">
                     <Form.Label>Title</Form.Label>
                     <Form.Control type="text" name="title" defaultValue={title} />

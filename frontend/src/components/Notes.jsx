@@ -1,13 +1,13 @@
-import { useAction } from '../hooks/useAction';
-import Note from "./Note"
 import { ACTIONS } from '../utils/constans';
-import UseNotes from '../hooks/UseNotes';
+import Note from "./Note"
+import { useActions } from '../hooks/useActions';
+import { useNotes } from '../hooks/useNotes';
 
 function Notes({ notes }) {
 
-    const { archiveNote, unarchiveNote } = UseNotes()
+    const { archiveNote, unarchiveNote } = useNotes()
 
-    const { setNote, setAction } = useAction()
+    const { setNote, setAction } = useActions()
 
     const handleDelete = (id) => {
         setNote({ id })
@@ -26,7 +26,7 @@ function Notes({ notes }) {
     const handleUnarchive = (id) => {
         unarchiveNote(id)
     }
-
+    console.log("render");
     return (
         <section className='notes-container'>
             {

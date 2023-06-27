@@ -1,14 +1,14 @@
 import { createContext, useState } from 'react'
 
-export const ActionContext = createContext()
+export const ActionsContext = createContext()
 
-export function ActionProvider({ children }) {
+export function ActionsProvider({ children }) {
 
     const [actionName, setAction] = useState("")
     const [note, setNote] = useState({})
 
     return (
-        <ActionContext.Provider value={{
+        <ActionsContext.Provider value={{
             actionName,
             setAction,
             note,
@@ -16,6 +16,6 @@ export function ActionProvider({ children }) {
         }}
         >
             {children}
-        </ActionContext.Provider>
+        </ActionsContext.Provider>
     )
 }

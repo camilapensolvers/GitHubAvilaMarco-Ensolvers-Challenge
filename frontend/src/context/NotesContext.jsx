@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState } from 'react'
 import { archiveNoteService, deleteNoteService, editNoteService, getNotesService, saveNoteService, unarchiveNoteService } from '../service/notes'
+import { createContext, useEffect, useState } from 'react'
 
 export const NotesContext = createContext()
 
